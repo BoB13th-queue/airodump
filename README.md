@@ -9,6 +9,9 @@ syntax : airodump <interface>
 sample : airodump mon0
 ```
 
+## 실행 결과
+![실행결과](./img/image.png)
+
 
 ## 상세
 
