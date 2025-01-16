@@ -21,6 +21,11 @@ void useage(void) {
 }
 
 int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        useage();
+        exit(EXIT_FAILURE);
+    }
+
     // 채널 호핑 스레드 시작
     thread hopper(channel_hop_thread, argv[1]);
 
@@ -38,6 +43,7 @@ int main(int argc, char* argv[]) {
         struct pcap_pkthdr* header;
         const u_char* pkt_data;
         int res = pcap_next_ex(handle, &header, &pkt_data);
+
         if (res == 0) continue; // timeout
         if (res == -1 || res == -2) break; // error or EOF
 

@@ -92,21 +92,27 @@ void print_result() {
               << time_str << " ]\n" << endl;
 
     // AP 목록 테이블 헤더
-    cout << " BSSID              PWR  Beacons    #Data  CH  ENC  ESSID" << endl;
-    cout << endl;
+    cout << " BSSID              "
+        << "  " << setw(4) << "PWR"
+        << "  " << setw(8) << "Beacons"
+        << "  " << setw(5) << "#Data"
+        << "  " << setw(2) << "CH"
+        << "  " << setw(8) << "ENC"
+        << "  " << "ESSID"
+        << endl;
 
     // AP 맵 순회
     for (auto &kv : g_ap_map) {
         const ap_info &ap = kv.second;
         // 한 줄 출력 (예시 포맷)
         cout 
-            << " " << setw(17) << left << ap.bssid
-            << "  " << setw(4) << (int)ap.pwr
-            << "  " << setw(8) << ap.beacon_count
-            << "  " << setw(5) << ap.data_count
-            << "  " << setw(2) << ap.channel
-            << "  " << setw(5) << ap.enc
-            << "   " << ap.essid
+            << " " << setw(17) << left  << ap.bssid    // BSSID 17자 폭, 좌측정렬
+            << "  " << setw(4)  << right << (int)ap.pwr  // PWR 4자 폭, 우측정렬
+            << "  " << setw(8)  << right << ap.beacon_count
+            << "  " << setw(5)  << right << ap.data_count
+            << "  " << setw(2)  << right << ap.channel
+            << "  " << setw(8)  << left  << ap.enc     // ENC 8자 폭, 좌측정렬
+            << "  " << ap.essid                             // ESSID는 남은 공간 그대로 출력
             << endl;
     }
 
