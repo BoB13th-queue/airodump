@@ -66,7 +66,6 @@ void channel_hop_thread(const char *ifname) {
         // 다음 채널 인덱스
         idx = (idx + 3) % (sizeof(ch_list) / sizeof(ch_list[0]));
 
-        // 5초 대기 (원하는 값으로 변경 가능)
         this_thread::sleep_for(chrono::seconds(HOP_INTERVAL));
     }
 }
@@ -93,7 +92,7 @@ void print_result() {
               << time_str << " ]\n" << endl;
 
     // AP 목록 테이블 헤더
-    cout << " BSSID              PWR  Beacons    #Data  CH   ESSID" << endl;
+    cout << " BSSID              PWR  Beacons    #Data  CH  ENC  ESSID" << endl;
     cout << endl;
 
     // AP 맵 순회
@@ -106,6 +105,7 @@ void print_result() {
             << "  " << setw(8) << ap.beacon_count
             << "  " << setw(5) << ap.data_count
             << "  " << setw(2) << ap.channel
+            << "  " << setw(5) << ap.enc
             << "   " << ap.essid
             << endl;
     }

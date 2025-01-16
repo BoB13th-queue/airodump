@@ -21,14 +21,16 @@ void useage(void) {
 }
 
 int main(int argc, char* argv[]) {
-    
     // 채널 호핑 스레드 시작
-    std::thread hopper(channel_hop_thread, argv[1]);
+    thread hopper(channel_hop_thread, argv[1]);
 
     // 패킷 캡처 루프
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t* handle = pcap_open_live(argv[1], BUFSIZ, 1, 1000, errbuf);
-    if (!handle) { /* error */ }
+    if (!handle) { 
+        fprintf(stderr, "pcap_open_live(%s) return nullptr - %s\n", argv[1], errbuf);
+        exit(EXIT_FAILURE);
+    }
 
     time_t last_print = time(NULL);
 
@@ -44,7 +46,7 @@ int main(int argc, char* argv[]) {
 
         // 주기적으로 print_result() 호출
         time_t now = time(NULL);
-        if (now - last_print >= CHANNEL_HOP_INTERVAL) { // 5초마다
+        if (now - last_print >= CHANNEL_HOP_INTERVAL) { 
             print_result();
             last_print = now;
         }
